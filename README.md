@@ -1,4 +1,4 @@
 # GoPoker
 (WORK IN PROGRESS) 
-This is a basic poker matching engine. 
-It will determine the best 5 card hand from an input of cards and compare that against the best 5 card hand of another input of cards.
+This is a deterministic basic poker engine for best hand. 
+It will take input of many n based card hands, determine the best 5 card hand from each, and then compare the hands against each other to determine the best hand. 
