@@ -1,7 +1,6 @@
 package main
 
 import (
-	"github.com/tvaughn2/GoPoker/api/resource/hand"
 	"github.com/tvaughn2/GoPoker/api/router"
 )
 
@@ -15,9 +14,6 @@ import (
 const RUN_TESTS bool = true
 
 func main() {
-	if RUN_TESTS {
-		hand.RunTests()
-	}
 	router.HandleRequests()
 
 }
