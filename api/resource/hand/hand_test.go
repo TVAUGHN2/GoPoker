@@ -1,63 +1,62 @@
-package hand_test
+package hand
 
 import (
 	"fmt"
 
 	"github.com/tvaughn2/GoPoker/api/resource/card"
-	"github.com/tvaughn2/GoPoker/api/resource/hand"
 )
 
 // *** Test Methods ***//
-func noPair() *hand.Hand {
-	return hand.NewHand([]*card.Card{card.NewCard(card.Cv2, card.Hearts), card.NewCard(card.CvJ, card.Spades),
+func noPair() *Hand {
+	return NewHand([]*card.Card{card.NewCard(card.Cv2, card.Hearts), card.NewCard(card.CvJ, card.Spades),
 		card.NewCard(card.CvQ, card.Spades), card.NewCard(card.CvK, card.Spades), card.NewCard(card.CvA, card.Spades)})
 }
-func pair() *hand.Hand {
-	return hand.NewHand([]*card.Card{card.NewCard(card.Cv2, card.Hearts), card.NewCard(card.Cv2, card.Spades),
+func pair() *Hand {
+	return NewHand([]*card.Card{card.NewCard(card.Cv2, card.Hearts), card.NewCard(card.Cv2, card.Spades),
 		card.NewCard(card.CvQ, card.Spades), card.NewCard(card.CvK, card.Spades), card.NewCard(card.CvA, card.Spades)})
 }
-func twoPairs() *hand.Hand {
-	return hand.NewHand([]*card.Card{card.NewCard(card.Cv2, card.Hearts), card.NewCard(card.Cv2, card.Spades),
+func twoPairs() *Hand {
+	return NewHand([]*card.Card{card.NewCard(card.Cv2, card.Hearts), card.NewCard(card.Cv2, card.Spades),
 		card.NewCard(card.CvQ, card.Spades), card.NewCard(card.CvQ, card.Clubs), card.NewCard(card.CvA, card.Spades)})
 }
-func set() *hand.Hand {
-	return hand.NewHand([]*card.Card{card.NewCard(card.Cv2, card.Hearts), card.NewCard(card.Cv2, card.Spades),
+func set() *Hand {
+	return NewHand([]*card.Card{card.NewCard(card.Cv2, card.Hearts), card.NewCard(card.Cv2, card.Spades),
 		card.NewCard(card.CvQ, card.Spades), card.NewCard(card.Cv2, card.Clubs), card.NewCard(card.CvA, card.Spades)})
 }
-func quads() *hand.Hand {
-	return hand.NewHand([]*card.Card{card.NewCard(card.Cv2, card.Hearts), card.NewCard(card.Cv2, card.Spades),
+func quads() *Hand {
+	return NewHand([]*card.Card{card.NewCard(card.Cv2, card.Hearts), card.NewCard(card.Cv2, card.Spades),
 		card.NewCard(card.Cv2, card.Diamonds), card.NewCard(card.Cv2, card.Clubs), card.NewCard(card.CvA, card.Spades)})
 }
-func fullHouse() *hand.Hand {
-	return hand.NewHand([]*card.Card{card.NewCard(card.Cv2, card.Hearts), card.NewCard(card.Cv2, card.Spades),
+func fullHouse() *Hand {
+	return NewHand([]*card.Card{card.NewCard(card.Cv2, card.Hearts), card.NewCard(card.Cv2, card.Spades),
 		card.NewCard(card.Cv2, card.Diamonds), card.NewCard(card.CvA, card.Clubs), card.NewCard(card.CvA, card.Spades)})
 }
-func straight() *hand.Hand {
-	return hand.NewHand([]*card.Card{card.NewCard(card.Cv3, card.Spades), card.NewCard(card.Cv2, card.Hearts),
+func straight() *Hand {
+	return NewHand([]*card.Card{card.NewCard(card.Cv3, card.Spades), card.NewCard(card.Cv2, card.Hearts),
 		card.NewCard(card.Cv4, card.Spades), card.NewCard(card.Cv5, card.Clubs), card.NewCard(card.Cv6, card.Spades)})
 }
-func aceLowStraight() *hand.Hand {
-	return hand.NewHand([]*card.Card{card.NewCard(card.CvA, card.Hearts), card.NewCard(card.Cv2, card.Spades),
+func aceLowStraight() *Hand {
+	return NewHand([]*card.Card{card.NewCard(card.CvA, card.Hearts), card.NewCard(card.Cv2, card.Spades),
 		card.NewCard(card.Cv3, card.Spades), card.NewCard(card.Cv4, card.Clubs), card.NewCard(card.Cv5, card.Spades)})
 }
-func flush() *hand.Hand {
-	return hand.NewHand([]*card.Card{card.NewCard(card.Cv2, card.Hearts), card.NewCard(card.Cv4, card.Hearts),
+func flush() *Hand {
+	return NewHand([]*card.Card{card.NewCard(card.Cv2, card.Hearts), card.NewCard(card.Cv4, card.Hearts),
 		card.NewCard(card.CvQ, card.Hearts), card.NewCard(card.CvK, card.Hearts), card.NewCard(card.CvA, card.Hearts)})
 }
-func straightFlush() *hand.Hand {
-	return hand.NewHand([]*card.Card{card.NewCard(card.Cv2, card.Hearts), card.NewCard(card.Cv3, card.Hearts),
+func straightFlush() *Hand {
+	return NewHand([]*card.Card{card.NewCard(card.Cv2, card.Hearts), card.NewCard(card.Cv3, card.Hearts),
 		card.NewCard(card.Cv4, card.Hearts), card.NewCard(card.Cv5, card.Hearts), card.NewCard(card.Cv6, card.Hearts)})
 }
-func royalFlush() *hand.Hand {
-	return hand.NewHand([]*card.Card{card.NewCard(card.CvT, card.Hearts), card.NewCard(card.CvJ, card.Hearts),
+func royalFlush() *Hand {
+	return NewHand([]*card.Card{card.NewCard(card.CvT, card.Hearts), card.NewCard(card.CvJ, card.Hearts),
 		card.NewCard(card.CvQ, card.Hearts), card.NewCard(card.CvK, card.Hearts), card.NewCard(card.CvA, card.Hearts)})
 }
-func tooManyCards() *hand.Hand {
-	return hand.NewHand([]*card.Card{card.NewCard(card.CvT, card.Hearts), card.NewCard(card.CvJ, card.Hearts),
+func tooManyCards() *Hand {
+	return NewHand([]*card.Card{card.NewCard(card.CvT, card.Hearts), card.NewCard(card.CvJ, card.Hearts),
 		card.NewCard(card.CvQ, card.Hearts), card.NewCard(card.CvK, card.Hearts), card.NewCard(card.CvA, card.Hearts), card.NewCard(card.Cv2, card.Hearts)})
 }
-func sameCards() *hand.Hand {
-	return hand.NewHand([]*card.Card{card.NewCard(card.CvT, card.Hearts), card.NewCard(card.CvJ, card.Hearts),
+func sameCards() *Hand {
+	return NewHand([]*card.Card{card.NewCard(card.CvT, card.Hearts), card.NewCard(card.CvJ, card.Hearts),
 		card.NewCard(card.CvQ, card.Hearts), card.NewCard(card.CvK, card.Hearts), card.NewCard(card.CvT, card.Hearts)})
 }
 
@@ -77,47 +76,47 @@ func handValueTestsPass() bool {
 	sameCards := sameCards()
 	testsPass := true
 
-	if noPair.Value != hand.HighCard {
+	if noPair.Value != HighCard {
 		fmt.Printf("ERROR: High Card != %s\n", noPair.Face)
 		testsPass = false
 	}
-	if pair.Value != hand.Pair {
+	if pair.Value != Pair {
 		fmt.Printf("ERROR: Pair = %s\n", pair.Face)
 		testsPass = false
 	}
-	if twoPairs.Value != hand.TwoPairs {
+	if twoPairs.Value != TwoPairs {
 		fmt.Printf("ERROR: Two Pair = %s\n", twoPairs.Face)
 		testsPass = false
 	}
-	if set.Value != hand.Set {
+	if set.Value != Set {
 		fmt.Printf("ERROR: Three of a Kind = %s\n", set.Face)
 		testsPass = false
 	}
-	if quads.Value != hand.Quads {
+	if quads.Value != Quads {
 		fmt.Printf("ERROR: Four of a Kind = %s\n", quads.Face)
 		testsPass = false
 	}
-	if fullHouse.Value != hand.FullHouse {
+	if fullHouse.Value != FullHouse {
 		fmt.Printf("ERROR: Full House = %s\n", fullHouse.Face)
 		testsPass = false
 	}
-	if straight.Value != hand.Straight {
+	if straight.Value != Straight {
 		fmt.Printf("ERROR: Straight = %s\n", straight.Face)
 		testsPass = false
 	}
-	if flush.Value != hand.Flush {
+	if flush.Value != Flush {
 		fmt.Printf("ERROR: Flush = %s\n", flush.Face)
 		testsPass = false
 	}
-	if straightFlush.Value != hand.StraightFlush {
+	if straightFlush.Value != StraightFlush {
 		fmt.Printf("ERROR: Straight Flush = %s\n", straightFlush.Face)
 		testsPass = false
 	}
-	if royalFlush.Value != hand.RoyalFlush {
+	if royalFlush.Value != RoyalFlush {
 		fmt.Printf("ERROR: Royal Flush = %s\n", royalFlush.Face)
 		testsPass = false
 	}
-	if aceLowStraight.Value != hand.Straight {
+	if aceLowStraight.Value != Straight {
 		fmt.Printf("ERROR: Ace Low Straight = %s\n", aceLowStraight.Face)
 		testsPass = false
 	}
