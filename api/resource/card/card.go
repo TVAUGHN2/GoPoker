@@ -1,31 +1,30 @@
-package main
+package card
 
 import (
 	"strings"
 	// "encoding/json"
 )
+
 //*** Card Logic | TODO: Move to own file ***//
 
-
 type CardSuit string
+
 const (
-	Clubs CardSuit = "c"
+	Clubs    CardSuit = "c"
 	Diamonds CardSuit = "d"
-	Hearts CardSuit = "h"
-	Spades CardSuit = "s"
+	Hearts   CardSuit = "h"
+	Spades   CardSuit = "s"
 )
 
-var CardSuitNames = map[CardSuit]string {
-	Clubs: "Clubs",
-	Diamonds : "Diamonds",
-	Hearts : "Hearts",
-	Spades : "Spades",
+var CardSuitNames = map[CardSuit]string{
+	Clubs:    "Clubs",
+	Diamonds: "Diamonds",
+	Hearts:   "Hearts",
+	Spades:   "Spades",
 }
 
-
-
 // type CardSuit struct {
-// 	Name string 
+// 	Name string
 // 	ShortName string
 // }
 
@@ -38,6 +37,7 @@ var CardSuitNames = map[CardSuit]string {
 
 // Numerical values make comparison easier
 type CardValue int
+
 const (
 	Cv2 CardValue = 2 + iota
 	Cv3
@@ -51,33 +51,33 @@ const (
 	CvJ
 	CvQ
 	CvK
-	CvA 
+	CvA
 )
 
 type CardFace struct {
-	Name string
+	Name      string
 	ShortName string
 }
-var CardFaces = map[CardValue]CardFace {
-	Cv2: CardFace{"Two", "2"},
-	Cv3 : CardFace{"Three", "3"},
-	Cv4 : CardFace{"Four", "4"},
-	Cv5 : CardFace{"Five", "5"},
-	Cv6 : CardFace{"Six", "6"},
-	Cv7 : CardFace{"Seven", "7"},
-	Cv8 : CardFace{"Eight", "8"},
-	Cv9 : CardFace{"Nine", "9"},
-	CvT : CardFace{"Ten", "T"},
-	CvJ : CardFace{"Jack", "J"},
-	CvQ : CardFace{"Queen", "Q"},
-	CvK : CardFace{"King", "K"},
-	CvA : CardFace{"Ace", "A"},
-}
 
+var CardFaces = map[CardValue]CardFace{
+	Cv2: CardFace{"Two", "2"},
+	Cv3: CardFace{"Three", "3"},
+	Cv4: CardFace{"Four", "4"},
+	Cv5: CardFace{"Five", "5"},
+	Cv6: CardFace{"Six", "6"},
+	Cv7: CardFace{"Seven", "7"},
+	Cv8: CardFace{"Eight", "8"},
+	Cv9: CardFace{"Nine", "9"},
+	CvT: CardFace{"Ten", "T"},
+	CvJ: CardFace{"Jack", "J"},
+	CvQ: CardFace{"Queen", "Q"},
+	CvK: CardFace{"King", "K"},
+	CvA: CardFace{"Ace", "A"},
+}
 
 type Card struct {
 	Value CardValue `json: "Value"`
-	Suit CardSuit `json: "Suit"`
+	Suit  CardSuit  `json: "Suit"`
 }
 
 // Treat as calc field to to use Card in REST
@@ -85,11 +85,11 @@ func (this *Card) Face() CardFace {
 	return CardFaces[this.Value]
 }
 
-func StringifyCards(cards []*Card) string{
-	var str strings.Builder 
+func StringifyCards(cards []*Card) string {
+	var str strings.Builder
 	str.WriteString(cards[0].ShortName())
 
-	for _,card := range cards[1:] {
+	for _, card := range cards[1:] {
 		str.WriteString(" ")
 		str.WriteString(card.ShortName())
 	}
