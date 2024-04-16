@@ -7,7 +7,7 @@ TODOs:
  *  ~~Move logic to  separate files.~~ 
  * 	~~Setup REST api.~~
  *  Add concurrency.
- *  Apply idiomatic Golang test harness.
+ *  ~~Apply idiomatic Golang test harness.~~
  *	Convert fmt to logging framework. (glog for lightweight use w/ ability to set logging level)
  *  Create logging interface
 
