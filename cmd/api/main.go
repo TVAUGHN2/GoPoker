@@ -1,5 +1,10 @@
 package main
 
+import (
+	"github.com/tvaughn2/GoPoker/api/resource/hand_test"
+	"github.com/tvaughn2/GoPoker/api/router"
+)
+
 /* TODOs:
  *  1. Add concurrency.
  *  2. Apply idiomatic Golang test harness.
@@ -11,8 +16,8 @@ const RUN_TESTS bool = true
 
 func main() {
 	if RUN_TESTS {
-		RunTests()
+		hand_test.RunTests()
 	}
-	router.handleRequests()
+	router.HandleRequests()
 
 }

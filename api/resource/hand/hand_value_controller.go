@@ -13,7 +13,7 @@ type HandValueResult struct {
 	Face  HandFace  `json: "Face"`
 }
 
-func handValue(w http.ResponseWriter, r *http.Request) {
+func HandValueProcessor(w http.ResponseWriter, r *http.Request) {
 	var payload []card.Card
 	decoder := json.NewDecoder(r.Body)
 	if err := decoder.Decode(&payload); err != nil {
@@ -30,7 +30,7 @@ func handValue(w http.ResponseWriter, r *http.Request) {
 
 	fmt.Println("Stringifiy: " + card.StringifyCards(cards))
 
-	hand := newHand(cards)
+	hand := NewHand(cards)
 
 	// if err := hand; err != nil {
 	// 	json.NewEncoder(w).Encode("Unable to create hand!")

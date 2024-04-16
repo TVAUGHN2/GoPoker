@@ -97,7 +97,7 @@ func StringifyCards(cards []*Card) string {
 	return str.String()
 }
 
-func newCard(cv CardValue, cs CardSuit) *Card {
+func NewCard(cv CardValue, cs CardSuit) *Card {
 	return &Card{cv, cs}
 }
 

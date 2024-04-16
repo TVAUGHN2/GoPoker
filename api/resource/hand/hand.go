@@ -68,7 +68,7 @@ func IsInvalidHand(orderedCards []*card.Card) bool {
 	return false
 }
 
-func newHand(cards []*card.Card) *Hand {
+func NewHand(cards []*card.Card) *Hand {
 	// Order cards for illogical check and straight matching
 	sort.Slice(cards, func(i, j int) bool {
 		return cards[i].Value < cards[j].Value
@@ -79,12 +79,12 @@ func newHand(cards []*card.Card) *Hand {
 		return nil
 	}
 
-	var HandValue HandValue = newHandValue(cards)
+	var HandValue HandValue = NewHandValue(cards)
 	return &Hand{HandValue, HandFaces[HandValue], cards}
 }
 
 // Due to frequency, sacrificing readability for optimization
-func newHandValue(orderedCards []*card.Card) HandValue {
+func NewHandValue(orderedCards []*card.Card) HandValue {
 	var result HandValue = Pair
 
 	// Map by card value for quicker matching
@@ -105,7 +105,7 @@ func newHandValue(orderedCards []*card.Card) HandValue {
 			}
 			if card.Value-1 != prevCard.Value {
 				// Edge case of ace-5 straight
-				if !(i == 3 && card.Value == CvA && orderedCards[0].Value == Cv2) {
+				if !(i == 3 && card.Value == card.CvA && orderedCards[0].Value == card.Cv2) {
 					isStraight = false
 				}
 			}
