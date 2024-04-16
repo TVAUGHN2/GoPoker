@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/tvaughn2/GoPoker/api/resource/card"
+	c "github.com/tvaughn2/GoPoker/api/resource/card"
 )
 
 //*** Hand Logic | TODO: Move to own file ***//
@@ -42,10 +42,10 @@ var HandFaces = map[HandValue]HandFace{
 type Hand struct {
 	Value HandValue
 	Face  HandFace
-	Cards []*card.Card
+	Cards []*c.Card
 }
 
-func IsInvalidHand(orderedCards []*card.Card) bool {
+func IsInvalidHand(orderedCards []*c.Card) bool {
 	if len(orderedCards) != 5 {
 		return true
 	}
@@ -68,14 +68,14 @@ func IsInvalidHand(orderedCards []*card.Card) bool {
 	return false
 }
 
-func NewHand(cards []*card.Card) *Hand {
+func NewHand(cards []*c.Card) *Hand {
 	// Order cards for illogical check and straight matching
 	sort.Slice(cards, func(i, j int) bool {
 		return cards[i].Value < cards[j].Value
 	})
 
 	if IsInvalidHand(cards) {
-		fmt.Printf("Invalid hand input! %s\n", card.StringifyCards(cards))
+		fmt.Printf("Invalid hand input! %s\n", c.StringifyCards(cards))
 		return nil
 	}
 
@@ -84,12 +84,12 @@ func NewHand(cards []*card.Card) *Hand {
 }
 
 // Due to frequency, sacrificing readability for optimization
-func NewHandValue(orderedCards []*card.Card) HandValue {
+func NewHandValue(orderedCards []*c.Card) HandValue {
 	var result HandValue = Pair
 
 	// Map by card value for quicker matching
 	// Impossible to have > 4 of same card value
-	var cardValues = make(map[card.CardValue][]*card.Card)
+	var cardValues = make(map[c.CardValue][]*c.Card)
 	for _, card := range orderedCards {
 		cardValues[card.Value] = append(cardValues[card.Value], card)
 	}
@@ -98,14 +98,14 @@ func NewHandValue(orderedCards []*card.Card) HandValue {
 	case 5:
 		var isFlush bool = true
 		var isStraight bool = true
-		var prevCard *card.Card = orderedCards[0]
+		var prevCard *c.Card = orderedCards[0]
 		for i, card := range orderedCards[1:] {
 			if card.Suit != prevCard.Suit {
 				isFlush = false
 			}
 			if card.Value-1 != prevCard.Value {
 				// Edge case of ace-5 straight
-				if !(i == 3 && card.Value == card.CvA && orderedCards[0].Value == card.Cv2) {
+				if !(i == 3 && card.Value == c.CvA && orderedCards[0].Value == c.Cv2) {
 					isStraight = false
 				}
 			}
@@ -115,7 +115,7 @@ func NewHandValue(orderedCards []*card.Card) HandValue {
 		case true:
 			switch isStraight {
 			case true:
-				if orderedCards[0].Value == card.CvT {
+				if orderedCards[0].Value == c.CvT {
 					result = RoyalFlush
 				} else {
 					result = StraightFlush
