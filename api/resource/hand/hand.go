@@ -4,7 +4,7 @@ import (
 	"fmt"
 	"sort"
 
-	"github.com/tvaughn2/api/resource/card"
+	"github.com/tvaughn2/GoPoker/api/resource/card"
 )
 
 //*** Hand Logic | TODO: Move to own file ***//
@@ -105,7 +105,7 @@ func newHandValue(orderedCards []*card.Card) HandValue {
 			}
 			if card.Value-1 != prevCard.Value {
 				// Edge case of ace-5 straight
-				if !(i == 3 && card.Value == card.CvA && orderedCards[0].Value == card.Cv2) {
+				if !(i == 3 && card.Value == CvA && orderedCards[0].Value == Cv2) {
 					isStraight = false
 				}
 			}

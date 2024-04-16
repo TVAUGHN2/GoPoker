@@ -5,12 +5,12 @@ import (
 	"fmt"
 	"net/http"
 
-	"github.com/tvaughn2/GoPoker/card"
+	"github.com/tvaughn2/GoPoker/api/resource/card"
 )
 
 type HandValueResult struct {
-	Value card.HandValue `json: "Value"`
-	Face  card.HandFace  `json: "Face"`
+	Value HandValue `json: "Value"`
+	Face  HandFace  `json: "Face"`
 }
 
 func handValue(w http.ResponseWriter, r *http.Request) {
