@@ -1,0 +1,12 @@
+# linting
+go fmt ./...
+goimports -l -w . # includes go fmt
+golint ./...
+go vet ./...
+golangci-lint run # includes golint, go vet
+
+# auto-increment versioning based on .properties.version file
+file=".properties.version"
+v=$(cat "$file")
+echo "${v%.*}.$((${v##*.}+1))" > $file
+git add .properties.version
