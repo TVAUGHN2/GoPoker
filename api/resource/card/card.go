@@ -2,10 +2,7 @@ package card
 
 import (
 	"strings"
-	// "encoding/json"
 )
-
-//*** Card Logic | TODO: Move to own file ***//
 
 type CardSuit string
 
@@ -22,18 +19,6 @@ var CardSuitNames = map[CardSuit]string{
 	Hearts:   "Hearts",
 	Spades:   "Spades",
 }
-
-// type CardSuit struct {
-// 	Name string
-// 	ShortName string
-// }
-
-// var (
-// 	Clubs = CardSuit{"Clubs", "c"}
-// 	Diamonds = CardSuit{"Diamonds", "d"}
-// 	Hearts = CardSuit{"Hearts", "h"}
-// 	Spades = CardSuit{"Spades", "s"}
-// )
 
 // Numerical values make comparison easier
 type CardValue int
@@ -81,8 +66,9 @@ type Card struct {
 }
 
 // Treat as calc field to to use Card in REST
-func (this *Card) Face() CardFace {
-	return CardFaces[this.Value]
+func Face() CardFace {
+	card := Card{}
+	return CardFaces[card.Value]
 }
 
 func StringifyCards(cards []*Card) string {

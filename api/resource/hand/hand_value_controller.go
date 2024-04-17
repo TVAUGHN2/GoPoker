@@ -9,8 +9,8 @@ import (
 )
 
 type HandValueResult struct {
-	Value HandValue `json: "Value"`
-	Face  HandFace  `json: "Face"`
+	Value HandValue `json:"Value"`
+	Face  HandFace  `json:"Face"`
 }
 
 func HandValueProcessor(w http.ResponseWriter, r *http.Request) {
