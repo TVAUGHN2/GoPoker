@@ -5,6 +5,9 @@ import (
 	"fmt"
 	"net/http"
 
+	"github.com/swaggest/openapi-go"
+	"github.com/swaggest/rest/nethttp"
+	"github.com/swaggest/rest/request"
 	"github.com/tvaughn2/GoPoker/api/resource/card"
 )
 
@@ -13,15 +16,29 @@ type HandValueResult struct {
 	Face  HandFace  `json:"Face"`
 }
 
-func HandValueProcessor(w http.ResponseWriter, r *http.Request) {
+func NewHandValueHandler() *handValueHandler {
+	decoderFactory := request.NewDecoderFactory()
+	decoderFactory.ApplyDefaults = true
+	//decoderFactory.SetDecoderFunc(rest.ParamInPath, gorillamux.PathToURLValues)
+
+	return &handValueHandler{
+		dec: decoderFactory.MakeDecoder(http.MethodPost, []card.Card{}, nil),
+	}
+}
+
+type handValueHandler struct {
+	// Automated request decoding is not required to collect OpenAPI schema,
+	// but it is good to have to establish a single source of truth and to simplify request reading.
+	dec nethttp.RequestDecoder
+}
+
+// ServeHTTP implements http.Handler.
+func (h *handValueHandler) ServeHTTP(w http.ResponseWriter, r *http.Request) {
 	var payload []card.Card
-	decoder := json.NewDecoder(r.Body)
-	if err := decoder.Decode(&payload); err != nil {
-		json.NewEncoder(w).Encode("Unable to decode!")
-		//respondWithError(w, http.StatusBadRequest, "Invalid request payload")
+	if err := h.dec.Decode(r, &payload, nil); err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
 		return
 	}
-	defer r.Body.Close()
 
 	var cards []*card.Card
 	for i := 0; i < len(payload); i++ {
@@ -32,13 +49,28 @@ func HandValueProcessor(w http.ResponseWriter, r *http.Request) {
 
 	hand := NewHand(cards)
 
-	// if err := hand; err != nil {
-	// 	json.NewEncoder(w).Encode("Unable to create hand!")
-	//     //respondWithError(w, http.StatusInternalServerError, err.Error())
-	//     return
-	// }
-
 	handResult := HandValueResult{hand.Value, hand.Face}
-	json.NewEncoder(w).Encode(handResult)
 
+	j, err := json.Marshal(handResult)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+
+		return
+	}
+
+	_, _ = w.Write(j)
+}
+
+// SetupOpenAPIOperation declares OpenAPI schema for the handler.
+func (h *handValueHandler) SetupOpenAPIOperation(oc openapi.OperationContext) error {
+	oc.SetTags("HandValue")
+	oc.SetSummary("Provides hand value rankings based on card info passed in.")
+	oc.SetDescription("This endpoint aggregates request in structured way.")
+
+	oc.AddReqStructure([]card.Card{})
+	oc.AddRespStructure(HandValueResult{})
+	oc.AddRespStructure(nil, openapi.WithContentType("text/html"), openapi.WithHTTPStatus(http.StatusBadRequest))
+	oc.AddRespStructure(nil, openapi.WithContentType("text/html"), openapi.WithHTTPStatus(http.StatusInternalServerError))
+
+	return nil
 }
