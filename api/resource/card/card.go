@@ -66,9 +66,8 @@ type Card struct {
 }
 
 // Treat as calc field to to use Card in REST
-func Face() CardFace {
-	card := Card{}
-	return CardFaces[card.Value]
+func (this *Card) Face() CardFace {
+	return CardFaces[this.Value]
 }
 
 func StringifyCards(cards []*Card) string {
