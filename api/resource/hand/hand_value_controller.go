@@ -6,6 +6,8 @@ import (
 	"net/http"
 
 	"github.com/swaggest/openapi-go"
+	"github.com/swaggest/rest"
+	"github.com/swaggest/rest/gorillamux"
 	"github.com/swaggest/rest/nethttp"
 	"github.com/swaggest/rest/request"
 	"github.com/tvaughn2/GoPoker/api/resource/card"
@@ -19,7 +21,7 @@ type HandValueResult struct {
 func NewHandValueHandler() *handValueHandler {
 	decoderFactory := request.NewDecoderFactory()
 	decoderFactory.ApplyDefaults = true
-	//decoderFactory.SetDecoderFunc(rest.ParamInPath, gorillamux.PathToURLValues)
+	decoderFactory.SetDecoderFunc(rest.ParamInPath, gorillamux.PathToURLValues)
 
 	return &handValueHandler{
 		dec: decoderFactory.MakeDecoder(http.MethodPost, []card.Card{}, nil),

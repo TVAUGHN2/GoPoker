@@ -1,7 +1,6 @@
 package router
 
 import (
-	"encoding/json"
 	"fmt"
 	"log"
 	"net/http"
@@ -13,18 +12,6 @@ import (
 	"github.com/swaggest/rest/gorillamux"
 	"github.com/tvaughn2/GoPoker/api/resource/hand"
 )
-
-func respondWithError(w http.ResponseWriter, code int, message string) {
-	respondWithJSON(w, code, map[string]string{"error": message})
-}
-
-func respondWithJSON(w http.ResponseWriter, code int, payload interface{}) {
-	response, _ := json.Marshal(payload)
-
-	w.Header().Set("Content-Type", "application/json")
-	w.WriteHeader(code)
-	w.Write(response)
-}
 
 func openApiCheck(err error) bool {
 	if err != nil {
@@ -40,6 +27,7 @@ func HandleRequests() {
 	router := mux.NewRouter().StrictSlash(true)
 
 	router.Handle("/handvalue", hand.NewHandValueHandler()).Methods("POST")
+
 	// Setup OpenAPI schema.
 	refl := openapi3.NewReflector()
 	refl.SpecSchema().SetTitle("GoPoker API")
@@ -49,8 +37,12 @@ func HandleRequests() {
 	getMux := router.Methods(http.MethodGet).Subrouter()
 	opts := middleware.RedocOpts{SpecURL: "/openapi.json"}
 	sh := middleware.Redoc(opts, nil)
+
 	getMux.Handle("/docs", sh)
-	getMux.Handle("/openapi.json", http.FileServer(http.Dir("../../docs/")))
+	getMux.Handle("/openapi.json", http.FileServer(http.Dir("./docs/")))
+
+	refl.Spec.AddOperation(http.MethodGet, "/docs", openapi3.Operation{})
+	refl.Spec.AddOperation(http.MethodGet, "/openapi.json", openapi3.Operation{})
 
 	// Walk the router with OpenAPI collector.
 	c := gorillamux.NewOpenAPICollector(refl)
@@ -59,7 +51,7 @@ func HandleRequests() {
 	// Get the resulting schema.
 	json, _ := refl.Spec.MarshalJSON()
 
-	f, err := os.Create("../../docs/openapi.json")
+	f, err := os.Create("./docs/openapi.json")
 	validOpenApiFile := openApiCheck(err)
 
 	if validOpenApiFile {
@@ -68,5 +60,7 @@ func HandleRequests() {
 	}
 	f.Close()
 
-	log.Fatal(http.ListenAndServe(":8002", router))
+	fmt.Println("Listening on port 3000")
+
+	log.Fatal(http.ListenAndServe(":3000", router))
 }

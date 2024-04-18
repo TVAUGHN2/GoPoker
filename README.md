@@ -11,10 +11,15 @@ TODOs:
  *	Convert fmt to logging framework. (glog for lightweight use w/ ability to set logging level)
  *  Create logging interface
 
-# Running 
+# Running
 - Navigate to root directory
 - Run the following commands to build and run:
 ```bash
-$ docker build -t go-poker-api .
-$ docker run -it --rm --name go-poker-api go-poker-api
+$ docker compose build
+$ docker compose up -d
+```
+# Swagger / OpenApi Spec
+To see the Open Api spec, navigate to 
+```
+localhost:3000/docs
 ```
