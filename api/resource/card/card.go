@@ -61,8 +61,8 @@ var CardFaces = map[CardValue]CardFace{
 }
 
 type Card struct {
-	Value CardValue `json: "Value"`
-	Suit  CardSuit  `json: "Suit"`
+	Value CardValue `json:"Value"`
+	Suit  CardSuit  `json:"Suit"`
 }
 
 // Treat as calc field to to use Card in REST

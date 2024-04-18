@@ -8,6 +8,5 @@ RUN go mod download && go mod verify
 COPY . .
 
 RUN go build -ldflags '-w -s' -a -o ./bin/api ./cmd/api
-
 CMD ["/GoPoker/bin/api"]
-EXPOSE 8080
+EXPOSE 3000

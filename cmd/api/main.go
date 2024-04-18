@@ -14,6 +14,6 @@ import (
 const RUN_TESTS bool = true
 
 func main() {
-	router.HandleRequests()
 
+	router.HandleRequests()
 }
