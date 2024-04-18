@@ -21,4 +21,4 @@
 go.work
 
 # Mac file
-*.DS_Store
+**/.DS_Store
